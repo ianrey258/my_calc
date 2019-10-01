@@ -26,46 +26,45 @@ class Calculator2 extends State<MyHomePage2>{
     );
   }
   String linearCheck(String equation){
-    String opt,resvalue = "";
+    String opt,value = "";
     for(int i=0;i<equation.length;i++){
       if(equation[i]=='+'||equation[i]=='-'||equation[i]=='*'||equation[i]=='/'||equation[i]=='%'){
         if(opt == '+'||opt == '-'||opt == '*'||opt == '/'||opt == '%'){
-          result = calculation(result, resvalue, opt);
-          resvalue = "";
+          result = calculation(result, num.parse(value), opt);
         }
         else{
-          result = num.parse(resvalue);
-          resvalue = "";
+          result = num.parse(value);
         }
+        value = "";
         opt = equation[i];
       }
       else{
         if(i == equation.length-1){
-          resvalue += equation[i];
-          resvalue = calculation(result, resvalue, opt).toString();
+          value += equation[i];
+          value = calculation(result, num.parse(value), opt).toString();
         }
         else{
-          resvalue += equation[i];
+          value += equation[i];
         }
       }
     }
-    return resvalue;
+    return value;
   }
-  num calculation(num result,String resvalue,String opt){
+  num calculation(num result,num resvalue,String opt){
     if(opt == '+'){
-      result = num.parse(resvalue) + result;
+      result += resvalue;
     }
     else if(opt == '-'){
-      result = result - num.parse(resvalue);
+      result = result - resvalue;
     }
     else if(opt == '*'){
-      result = num.parse(resvalue) * result;
+      result *= resvalue;
     }
     else if(opt == '/'){
-      result = num.parse(resvalue) / result;
+      result = result / resvalue;
     }
     else if(opt == "%"){
-      result = (num.parse(resvalue)/100) * result;
+      result *= (resvalue/100);
     }
     return result;
   }
